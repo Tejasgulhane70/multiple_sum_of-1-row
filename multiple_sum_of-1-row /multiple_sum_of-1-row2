@@ -1,0 +1,103 @@
+package Task_total;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+
+public class Multiple_Sum_in_one_row 
+{
+	
+	public static void main(String[] args) throws InterruptedException 
+	{
+		WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		
+		driver.get("https://kusumoffice.mahadiscom.in/solar/");
+		
+		driver.findElement(By.id("useremail")).sendKeys("ho@mahadiscom.in");
+		driver.findElement(By.id("password")).sendKeys("123456");
+		driver.findElement(By.xpath("//button[text()='Login']")).click();
+		Thread.sleep(4000);
+		
+		WebElement report = driver.findElement(By.xpath("(//li[@class='nav-item'])[3]"));
+		Actions act = new Actions(driver);
+		act.moveToElement(report).perform();
+		Thread.sleep(1000);
+
+		
+		driver.findElement(By.xpath("//span[normalize-space()='PM KUSUM B Abstract Report']")).click();
+		Thread.sleep(5000);
+		
+		int actualSum1 = 0;
+		int Expectedsum1=0;
+		
+		int actualSum2 = 0;
+		int Expectedsum2=0;
+		WebElement data;
+		for (int r = 1; r <= 1; r++) 
+		{
+		    for (int c = 3; c <= 10; c++) 
+		    {
+		       data  = driver.findElement(By.xpath("//table[@class='data_table table table-bordered']/tbody/tr[" + r + "]/td[" + c + "]"));
+		        System.out.println("Row " + r + ", Column " + c + ": " + data.getText());
+		        
+		        
+		        
+		        if(c <=5 )
+		        {
+		       	    int number = Integer.parseInt(data.getText());
+		       	    Expectedsum1 = Expectedsum1 + number;
+
+		        }
+                 
+		        if(c == 6)
+		        {
+		        int number = Integer.parseInt(data.getText());
+		        actualSum1 += number;
+		        }
+		        
+		        
+		        if(c <=9 )
+		        {
+		       	    int number1 = Integer.parseInt(data.getText());
+		       	    Expectedsum2 = Expectedsum1 + number1;
+
+		        }
+                 
+		        if(c == 10)
+		        {
+		        int number1 = Integer.parseInt(data.getText());
+		        actualSum2 += number1;
+		        }
+		        
+		       		 
+		    }
+		}
+		
+          System.out.println("Expectedsum1" + Expectedsum1);
+          System.out.println("actualsum1" + actualSum1);
+          
+          System.out.println("Expectedsum2" + Expectedsum2);
+          System.out.println("actualsum2" + actualSum2);
+          
+          
+          if(Expectedsum1 == actualSum1)
+          {
+        	  System.out.println("total sum matched");
+          }
+          else
+          {
+        	  System.out.println("total sum matched is not matched");
+          }
+          
+          
+          
+	}
+}
+
+
